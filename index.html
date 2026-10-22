@@ -133,7 +133,83 @@
       } else {
         badge.className = "cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold bg-red-500/10 border-red-500/30 text-red-400 animate-pulse";
         badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> SaaS Expiré (14 990 F/Mois)`;
+        <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>SoukPro / Soukassou</title>
+</head>
+<body>
+
+    <!-- 1. Le contenu principal de votre application (vos menus, formulaires existants, etc.) -->
+    <div class="main-content">
+        <h1>Bienvenue sur SoukPro</h1>
+        <!-- Vos autres éléments HTML actuels -->
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 2. COLLEZ LE CODE DE PAIEMENT ICI          -->
+    <!-- ========================================== -->
+    <div class="payment-section" style="max-width: 400px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; font-family: Arial, sans-serif;">
+        <h3>Effectuer un paiement (14 990 FCFA)</h3>
         
+        <!-- VOTRE NUMÉRO DE RÉCEPTION -->
+        <div style="background-color: #f8f9fa; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+            <small style="color: #666;">Numéro de réception :</small><br>
+            <strong style="font-size: 1.1em; color: #2e7d32;">+235 XX XX XX XX</strong>
+        </div>
+
+        <form id="paymentForm" onsubmit="envoyerTransaction(event)">
+            <div style="margin-bottom: 15px;">
+                <label for="phone" style="display: block; margin-bottom: 5px;">Votre numéro de téléphone :</label>
+                <input type="tel" id="phone" placeholder="ex: 66000000" required style="width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 5px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="operator" style="display: block; margin-bottom: 5px;">Opérateur Mobile Money :</label>
+                <select id="operator" required style="width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 5px;">
+                    <option value="">-- Sélectionnez --</option>
+                    <option value="Airtel Money">Airtel Money Tchad</option>
+                    <option value="Moov Money">Moov Money Tchad (Flooz)</option>
+                </select>
+            </div>
+
+            <input type="hidden" id="amount" value="14990">
+
+            <button type="submit" style="width: 100%; background-color: #007bff; color: white; padding: 12px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+                Confirmer le paiement
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // METTEZ VOTRE VRAI NUMÉRO ICI (avec l'indicatif 235, sans le +)
+        const MON_NUMERO_TELEPHONE = "23568212627"; 
+
+        function envoyerTransaction(event) {
+            event.preventDefault();
+            const clientPhone = document.getElementById('phone').value;
+            const operator = document.getElementById('operator').value;
+            const amount = document.getElementById('amount').value;
+
+            let ussdCode = "";
+            if (operator === "Airtel Money") {
+                ussdCode = `*150*1*${MON_NUMERO_TELEPHONE}*${amount}#`;
+            } else if (operator === "Moov Money") {
+                ussdCode = `*800*1*${MON_NUMERO_TELEPHONE}*${amount}#`;
+            }
+
+            alert(`Pour finaliser, composez : ${ussdCode}`);
+
+            const messageWhatsApp = `Bonjour, je viens de faire un transfert de ${amount} FCFA via ${operator}. Mon numéro : ${clientPhone}`;
+            window.open(`https://wa.me/${MON_NUMERO_TELEPHONE}?text=${encodeURIComponent(messageWhatsApp)}`, '_blank');
+        }
+    </script>
+    <!-- ========================================== -->
+
+</body>
+</html>
+
         // Lock Pro Content
         overlay.classList.remove('hidden');
         content.classList.add('paywall-blur');
