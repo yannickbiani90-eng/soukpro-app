@@ -1,0 +1,197 @@
+<!-- ... existing code ... -->
+        <!-- SaaS Renewal Reminder Card -->
+        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-semibold text-slate-300">Abonnement SaaS</span>
+            <span class="text-xs font-bold text-amber-400">14 990 F/Mois</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mb-2">Accès illimité aux modules de gestion d'entreprise ERP.</p>
+          <button onclick="openPaywallModal()" class="w-full py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold text-xs rounded-lg transition-all">
+            <i class="fa-solid fa-bolt mr-1"></i> Gérer mon abonnement
+          </button>
+        </div>
+      </aside>
+<!-- ... existing code ... -->
+        <!-- Paywall Overlay Barrier (Displayed if SaaS Subscription is NOT active) -->
+        <div id="paywallOverlay" class="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 rounded-2xl bg-slate-900/85 backdrop-blur-md text-center border border-amber-500/30">
+          <div class="w-16 h-16 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center text-3xl mb-4 border border-amber-500/30 shadow-lg shadow-amber-500/10">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <h2 class="text-2xl font-extrabold text-white max-w-md">Module Pro Verrouillé</h2>
+          <p class="text-slate-300 text-sm max-w-md mt-2">
+            L'accès à la suite complète d'outils ERP (Caisse POS, Bourse Fret, B2B, Carnet d'Ardoise, Stocks) exige un abonnement **SoukPro SaaS**.
+          </p>
+          
+          <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 my-4 max-w-sm w-full">
+            <div class="text-xs text-slate-400 uppercase font-semibold">Tarif Abonnement Unique</div>
+            <div class="text-3xl font-black text-amber-400 my-1">14 990 <span class="text-sm font-normal text-slate-300">FCFA / mois</span></div>
+            <div class="text-xs text-slate-400">Inclus: Multi-utilisateurs, Support & Mises à jour ERP</div>
+          </div>
+
+          <button onclick="openPaywallModal()" class="px-8 py-3 bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-extrabold text-sm rounded-xl shadow-lg shadow-amber-500/25 transition-all transform hover:scale-105">
+            <i class="fa-solid fa-bolt mr-2"></i> Activer / Débloquer l'Accès Pro
+          </button>
+        </div>
+<!-- ... existing code ... -->
+  <!-- PAYWALL PAYMENT MODAL -->
+  <div id="paywallModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm hidden">
+    <div class="bg-slate-800 border border-slate-700 w-full max-w-lg rounded-2xl p-6 shadow-2xl relative overflow-hidden">
+      <!-- Top banner -->
+      <div class="absolute -top-12 -right-12 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
+
+      <div class="flex justify-between items-start mb-4">
+        <div>
+          <span class="text-xs font-semibold uppercase text-amber-400 tracking-wider">Abonnement Entreprise</span>
+          <h3 class="text-xl font-bold text-white">Activer le Pass SoukPro SaaS</h3>
+        </div>
+        <button onclick="closePaywallModal()" class="text-slate-400 hover:text-white text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/60 mb-5">
+        <div class="flex justify-between items-baseline mb-1">
+          <span class="text-sm font-medium text-slate-300">Abonnement Mensuel Pro</span>
+          <span class="text-2xl font-extrabold text-amber-400">14 990 FCFA</span>
+        </div>
+        <p class="text-xs text-slate-400">Débloque instantanément l'ensemble des modules ERP Commerçant pour 30 jours.</p>
+      </div>
+
+      <!-- Payment Method Selection -->
+      <div class="space-y-4">
+        <p class="text-xs font-semibold text-slate-300">Choisissez le mode de paiement Mobile Money :</p>
+        
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Airtel Money -->
+          <label class="cursor-pointer border border-slate-700 bg-slate-900/40 hover:border-amber-500 p-3 rounded-xl flex flex-col items-center gap-2 transition-all">
+            <input type="radio" name="paymentMethod" value="airtel" class="hidden" checked>
+            <div class="w-8 h-8 rounded-full bg-red-600/20 text-red-500 flex items-center justify-center font-bold text-xs">
+              AM
+            </div>
+            <span class="text-xs font-bold text-slate-200">Airtel Money</span>
+          </label>
+
+          <!-- Moov Money -->
+          <label class="cursor-pointer border border-slate-700 bg-slate-900/40 hover:border-amber-500 p-3 rounded-xl flex flex-col items-center gap-2 transition-all">
+            <input type="radio" name="paymentMethod" value="moov" class="hidden">
+            <div class="w-8 h-8 rounded-full bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold text-xs">
+              MM
+            </div>
+            <span class="text-xs font-bold text-slate-200">Moov Money</span>
+          </label>
+        </div>
+
+        <!-- Phone Number Field -->
+        <div>
+          <label class="block text-xs text-slate-400 mb-1">Numéro de téléphone Tchad (+235)</label>
+          <input type="tel" id="payPhone" placeholder="66 XX XX XX / 99 XX XX XX" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500">
+        </div>
+
+        <!-- Simulated Instant Payment Action -->
+        <button onclick="processSubscription()" id="payBtn" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-sm transition-all shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-mobile-screen-button"></i> Payer 14 990 FCFA & Débloquer
+        </button>
+      </div>
+
+      <!-- Footer Info -->
+      <div class="mt-4 text-center">
+        <p class="text-[11px] text-slate-500">Validation instantanée via Push USSD mobile.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State Management for SaaS Subscription Status
+    // Options for status: 'ACTIVE', 'EXPIRED', 'UNPAID'
+    let saasState = {
+      status: 'EXPIRED', // Default set to expired/unpaid to demonstrate Paywall
+      daysRemaining: 0,
+      monthlyFee: 14990
+    };
+
+    // Initialize Page
+    window.onload = function() {
+      updateSaaSUI();
+    };
+
+    function updateSaaSUI() {
+      const badge = document.getElementById('subBadge');
+      const overlay = document.getElementById('paywallOverlay');
+      const content = document.getElementById('proContent');
+      const lockIcons = document.querySelectorAll('.pro-lock-icon');
+
+      if (saasState.status === 'ACTIVE') {
+        badge.className = "cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold bg-emerald-500/10 border-emerald-500/30 text-emerald-400";
+        badge.innerHTML = `<i class="fa-solid fa-check-circle"></i> SaaS Pro Active (${saasState.daysRemaining}j restantes)`;
+        
+        // Unlock Pro Content
+        overlay.classList.add('hidden');
+        content.classList.remove('paywall-blur');
+        
+        lockIcons.forEach(icon => icon.innerHTML = '<i class="fa-solid fa-angle-right text-slate-500 text-xs"></i>');
+      } else {
+        badge.className = "cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold bg-red-500/10 border-red-500/30 text-red-400 animate-pulse";
+        badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> SaaS Expiré (14 990 F/Mois)`;
+        
+        // Lock Pro Content
+        overlay.classList.remove('hidden');
+        content.classList.add('paywall-blur');
+        
+        lockIcons.forEach(icon => icon.innerHTML = '<i class="fa-solid fa-lock text-amber-400 text-xs"></i>');
+      }
+    }
+
+    // Modal Control
+    function openPaywallModal() {
+      document.getElementById('paywallModal').classList.remove('hidden');
+    }
+
+    function closePaywallModal() {
+      document.getElementById('paywallModal').classList.add('hidden');
+    }
+
+    // Switch between Public tabs
+    function switchTab(tabId) {
+      document.getElementById('tab-marketplace').classList.add('hidden');
+      document.getElementById('tab-profile').classList.add('hidden');
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+    }
+
+    // Switch between Pro tabs
+    function switchProTab(proTabId) {
+      const tabs = document.querySelectorAll('.pro-tab-content');
+      tabs.forEach(tab => tab.classList.add('hidden'));
+      document.getElementById(`pro-${proTabId}`).classList.remove('hidden');
+
+      if (saasState.status !== 'ACTIVE') {
+        openPaywallModal();
+      }
+    }
+
+    // Simulate Payment Processing via Mobile Money
+    function processSubscription() {
+      const phone = document.getElementById('payPhone').value;
+      if (!phone || phone.length < 8) {
+        alert('Veuillez saisir un numéro de téléphone Mobile Money valide.');
+        return;
+      }
+
+      const btn = document.getElementById('payBtn');
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Traitement USSD en cours...`;
+
+      setTimeout(() => {
+        saasState.status = 'ACTIVE';
+        saasState.daysRemaining = 30;
+        updateSaaSUI();
+        closePaywallModal();
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-mobile-screen-button"></i> Payer 14 990 FCFA & Débloquer`;
+      }, 2000);
+    }
+
+    function toggleRole() {
+      alert("Mode de démonstration : Le rôle Commerçant Pro est sélectionné pour tester la grille de monétisation SaaS.");
+    }
+  </script>
+<!-- ... existing code ... -->
